@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Plant {
+  id        String      @id @default(uuid())
+  name      String
+  location  String?
+  operations Operation[]
+  createdAt DateTime @default(now())
+}
+
+model Operation {
+  id        String @id @default(uuid())
+  name      String
+  plantId   String
+  plant     Plant @relation(fields: [plantId], references: [id])
+  costs     OperationCost[]
+  createdAt DateTime @default(now())
+}
+
+model OperationCost {
+  id           String @id @default(uuid())
+  operationId  String
+  operation    Operation @relation(fields: [operationId], references: [id])
+  volumeRange  VolumeRange
+  cost         Float
+  margin       Float
+  createdAt    DateTime @default(now())
+
+  @@unique([operationId, volumeRange])
+}
+
+enum VolumeRange {
+  KG_300
+  KG_500
+  T_1
+  T_3
+  T_5
+  T_10
+  T_20
+  T_30
+}

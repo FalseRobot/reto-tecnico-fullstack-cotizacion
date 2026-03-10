@@ -1,0 +1,40 @@
+extend type Query {
+  operationsByPlant(plantId: ID!): [Operation!]!
+}
+
+extend type Mutation {
+  createOperation(plantId: ID!, name: String!): Operation!
+  saveOperationCosts(operationId: ID!, costs: [OperationCostInput!]!): Operation!
+}
+
+type Operation {
+  id: ID!
+  name: String!
+  plantId: String!
+  costs: [OperationCost!]!
+}
+
+type OperationCost {
+  id: ID!
+  volumeRange: VolumeRange!
+  cost: Float!
+  margin: Float!
+  lowMargin: Boolean!
+}
+
+input OperationCostInput {
+  volumeRange: VolumeRange!
+  cost: Float!
+  margin: Float!
+}
+
+enum VolumeRange {
+  KG_300
+  KG_500
+  T_1
+  T_3
+  T_5
+  T_10
+  T_20
+  T_30
+}

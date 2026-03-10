@@ -1,0 +1,11 @@
+type Query {
+  plants: [Plant!]!
+}
+
+type Mutation
+
+type Plant {
+  id: ID!
+  name: String!
+  location: String
+}
