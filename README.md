@@ -83,9 +83,29 @@ http://localhost:5173
 4. React consulta la API y muestra los rangos de volumen en una tabla
 5. Si el margen es menor o igual a 5% se muestra como alerta
 6. La UI permite Crear nuevas operaciones o editar las existentes persistiendo los cambios en db :) 
-
+Para simplificar el setup se usa SQLite y datos iniciales con seed
 ---
 
-## Notas
+## Git / Branching
 
-Para simplificar el setup se usa SQLite y datos iniciales con seed
+Para trabajar una feature usaría una rama tipo:
+
+git checkout -b feature/margins
+
+Mientras trabajo la mantengo actualizada con `main` así:
+
+git checkout main
+git pull origin main
+git checkout feature/margins
+git rebase main
+
+### en caso conflicto ...
+
+Si otro dev modifica el mismo `schema.graphql`, Git marcaría el conflicto
+
+En ese caso reviso ambos cambios, dejo la versión correcta del schema y continúo el rebase:
+
+git add src/graphql/schema.graphql
+git rebase –continue
+
+La idea es no sobrescribir cambios de otros sin revisar, sobre todo en archivos compartidos como el schema
